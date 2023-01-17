@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Producto {
+  id Int @id @default(autoincrement())
+  nombre String
+  precio Float
+  imagen String
+  categoria Categoria @relation(fields: [categoriaId], references: [id]) //Referenciamos nuestro campo con uno del otro modelo
+  categoriaId Int //Debe tener el mismo tipo al cual se va a relacionar.
+}
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  nombre String
+  icono String
+  productos Producto[] //El [] aclara que va a ser una coleccion de productos.
+}
+
+model Orden{
+  id Int @id @default(autoincrement())
+  nombre String
+  fecha String
+  total Float
+}
+//Despues de crear un modelo, realizamos una migracion que seria como un control de versiones pero en DB's.
