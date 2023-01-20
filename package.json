@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "prisma":{
-
+    "seed" : "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@next/font": "13.1.2",
