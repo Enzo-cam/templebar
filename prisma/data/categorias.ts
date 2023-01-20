@@ -1,7 +1,7 @@
 const categorias = [
     {
         icono: "cafe",
-        nombre: "Café"
+        nombre: "Cafe"
       },
       {
         icono: "hamburguesa",
