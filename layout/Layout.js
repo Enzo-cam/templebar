@@ -1,7 +1,24 @@
 import Head from "next/head"
 import Sidebar from "Components/Sidebar"
+import Modal from 'react-modal'
+import useTemple from "Hooks/useTemple";
+import ModalProd from "Components/ModalProd";
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+};
+
+Modal.setAppElement("#__next")
 
 export default function Layout({children, pagina}) {
+    const {modal} = useTemple()
     return (
         <>
             <Head>
@@ -19,6 +36,15 @@ export default function Layout({children, pagina}) {
                     </div>
                 </main>
             </div>
+
+            {modal && (
+                <Modal
+                    isOpen={modal}
+                    style={customStyles}
+                >
+                    <ModalProd />
+                </Modal>
+            )}
         </>
     )
 }
