@@ -2,7 +2,7 @@
 import { PrismaClient } from "@prisma/client"
 import Layout from "layout/Layout"
 import useTemple from "Hooks/useTemple"
-
+import Producto from "Components/Producto"
 
 export default function Home() {
   const {catActual} = useTemple()
@@ -13,6 +13,15 @@ export default function Home() {
       <p className="text-2xl my-2">
         Elige lo que quieras pedir:
       </p>
+
+      <div className="grid gap-4 grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {catActual?.productos?.map(producto=> (
+          <Producto 
+            key={producto.id}
+            producto={producto}
+          />
+        ))}
+      </div>
     </Layout>
   )
 }
