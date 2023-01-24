@@ -37,7 +37,13 @@ const TempleProv = ({children}) =>{
     }
 
     const handlePedido = ({categoriaId, imagen, ...orden}) =>{
-        setPedido([...pedido, orden])
+        if(pedido.some(ordenSate => ordenSate.id === orden.id)){
+            const ordenActualizada = pedido.map(ordenState => ordenState.id === orden.id ? orden : ordenState)
+            setPedido(ordenActualizada)
+        }else{
+            setPedido([...pedido, orden])
+        }
+        setModal(false)
     }
     return(
         <TempleContext.Provider
@@ -49,7 +55,8 @@ const TempleProv = ({children}) =>{
                 handleProd,
                 modal,
                 handleModal,
-                handlePedido
+                handlePedido,
+                pedido
             }}
         >
             {children}

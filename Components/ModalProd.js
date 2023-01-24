@@ -1,12 +1,25 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import useTemple from "Hooks/useTemple"
 import { formatearDin } from "helpers"
 
 const ModalProd = () => {
-    const {producto, handleModal, handlePedido} = useTemple()
+    const {producto, handleModal, handlePedido, pedido} = useTemple()
     const {nombre, precio, imagen} = producto;
     const [cantidad, setCantidad] = useState(1)
+    const [edicion, setEdicion] = useState(false)
+
+    useEffect(() => {
+        if(pedido.some(pedidoState => pedidoState.id === producto.id)){
+            const productoEdicion = pedido.find(pedidoState => pedidoState.id === producto.id)
+            setEdicion(true)
+            setCantidad(productoEdicion.cantidad)
+        }
+    }, [pedido, producto])
+    
+    
+
+
     return (
     <div className='md:flex gap-10'>
         <div className='md:w-1/3'>
@@ -18,7 +31,7 @@ const ModalProd = () => {
             />
         </div>
         <div className='md:w-2/3'>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-3">
                 <button 
                     onClick={() => handleModal()}
                 >
@@ -66,7 +79,7 @@ const ModalProd = () => {
                     className="bg-amber-600 cursor-pointer px-5 py-2 mt-4 text-white font-medium uppercase rounded"
                     onClick={() => handlePedido({...producto, cantidad})}
                 >
-                    Agregar pedido
+                    {edicion ? 'Editar pedido' : 'Agregar al pedido'}
                 </button>
         </div>
     </div>
