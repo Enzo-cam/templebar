@@ -9,6 +9,7 @@ const TempleProv = ({children}) =>{
     const [catActual, setCategoriaActual] = useState([])
     const [producto, setProducto] = useState({})
     const [modal, setModal] = useState(false)
+    const [pedido, setPedido] = useState([])
 
     const obtenerCat = async () =>{
         const {data} = await axios('/api/categorias')
@@ -34,6 +35,10 @@ const TempleProv = ({children}) =>{
     const handleModal = () =>{
         setModal(!modal)
     }
+
+    const handlePedido = ({categoriaId, imagen, ...orden}) =>{
+        setPedido([...pedido, orden])
+    }
     return(
         <TempleContext.Provider
             value={{
@@ -43,7 +48,8 @@ const TempleProv = ({children}) =>{
                 producto,
                 handleProd,
                 modal,
-                handleModal
+                handleModal,
+                handlePedido
             }}
         >
             {children}
