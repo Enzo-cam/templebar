@@ -1,10 +1,13 @@
 import { useState, useEffect, createContext } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
+import { useRouter } from "next/router"
 
 const TempleContext = createContext()
 
 const TempleProv = ({children}) =>{
+    const router = useRouter()
+
     const [categorias, setCategorias] = useState([])
     const [catActual, setCategoriaActual] = useState([])
     const [producto, setProducto] = useState({})
@@ -26,7 +29,8 @@ const TempleProv = ({children}) =>{
 
     const handleCat = (id) =>{
         const categoria = categorias.filter(categoria => categoria.id === id)
-        setCategoriaActual(categoria[0])        
+        setCategoriaActual(categoria[0])
+        router.push('/')     
     }
 
     const handleProd = (prod) =>{
@@ -36,8 +40,19 @@ const TempleProv = ({children}) =>{
         setModal(!modal)
     }
 
+    const handleEditar = id => {
+        const editarProd = pedido.filter(producto => producto.id === id)
+        setProducto(editarProd[0])
+        setModal(!modal)
+    }
+    
+    const handleEliminar = id => {
+        const ordenActualizada = pedido.filter(producto => producto.id !== id)
+        setPedido(ordenActualizada)
+    }
+    
 
-    const handlePedido = ({categoriaId, imagen, ...orden}) =>{
+    const handlePedido = ({categoriaId, ...orden}) =>{
         if(pedido.some(ordenSate => ordenSate.id === orden.id)){
             const ordenActualizada = pedido.map(ordenState => ordenState.id === orden.id ? orden : ordenState)
             setPedido(ordenActualizada)
@@ -78,7 +93,9 @@ const TempleProv = ({children}) =>{
                 modal,
                 handleModal,
                 handlePedido,
-                pedido
+                pedido,
+                handleEditar,
+                handleEliminar
             }}
         >
             {children}
