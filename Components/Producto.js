@@ -13,8 +13,8 @@ export default function Producto({producto}) {
         <Image 
             src={`/img/${imagen}.jpg`}
             alt={`Producto ${nombre}`}
-            height={500}
-            width={400}
+            height={400}
+            width={300}
         />
 
         <div className="p-5 flex flex-col h-max">

@@ -13,6 +13,8 @@ const TempleProv = ({children}) =>{
     const [producto, setProducto] = useState({})
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
+    const [nombre, setNombre] = useState('')
+    const [total, setTotal] = useState(0)
 
     const obtenerCat = async () =>{
         const {data} = await axios('/api/categorias')
@@ -26,6 +28,13 @@ const TempleProv = ({children}) =>{
     useEffect(() => {
       setCategoriaActual(categorias[0])
     }, [categorias])
+
+    useEffect(() => {
+        const nuevoTotal = pedido.reduce((total, producto) => (producto.precio * producto.cantidad) + total, 0)
+
+        setTotal(nuevoTotal)
+    }, [pedido])
+    
 
     const handleCat = (id) =>{
         const categoria = categorias.filter(categoria => categoria.id === id)
@@ -49,6 +58,11 @@ const TempleProv = ({children}) =>{
     const handleEliminar = id => {
         const ordenActualizada = pedido.filter(producto => producto.id !== id)
         setPedido(ordenActualizada)
+    }
+    
+    const confirmarPedido = async (e) => {
+        e.preventDefault()
+        console.log('Orden enviada.')
     }
     
 
@@ -95,7 +109,11 @@ const TempleProv = ({children}) =>{
                 handlePedido,
                 pedido,
                 handleEditar,
-                handleEliminar
+                handleEliminar,
+                nombre,
+                setNombre,
+                confirmarPedido,
+                total
             }}
         >
             {children}
