@@ -23,10 +23,11 @@ model Categoria {
   productos Producto[] //El [] aclara que va a ser una coleccion de productos.
 }
 
-model Orden{
+model Orden{ //Al mandar una orden, se deben pasar TODOS los datos que se declararon en este esquema.
   id Int @id @default(autoincrement())
   nombre String
   fecha String
   total Float
+  pedido Json
 }
 //Despues de crear un modelo, realizamos una migracion que seria como un control de versiones pero en DB's.
