@@ -64,8 +64,17 @@ const TempleProv = ({children}) =>{
         e.preventDefault()
 
         try {
-            const {data} =  await axios.post('/api/ordenes', {pedido, nombre, total, fecha : Date.now().toString()})
-            console.log(data)
+            await axios.post('/api/ordenes', {pedido, nombre, total, fecha : Date.now().toString()})
+            // Reiniciar la app a 0.
+            setCategorias(categorias[0])
+            setPedido([])
+            setNombre('')
+            setTotal(0)
+
+            toast.success('Pedido realizado correctamente.')
+            setTimeout(() => {
+                router.push('/')
+            }, 2000);
         } catch (error) {
             console.log(error)
         }
