@@ -66,7 +66,7 @@ const TempleProv = ({children}) =>{
         try {
             await axios.post('/api/ordenes', {pedido, nombre, total, fecha : Date.now().toString()})
             // Reiniciar la app a 0.
-            setCategorias(categorias[0])
+            setCategoriaActual(categorias[0])
             setPedido([])
             setNombre('')
             setTotal(0)
@@ -88,7 +88,7 @@ const TempleProv = ({children}) =>{
             setPedido(ordenActualizada)
             toast.info('Orden editada', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -101,7 +101,7 @@ const TempleProv = ({children}) =>{
             setPedido([...pedido, orden])
             toast.success('Agregado a la orden', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
