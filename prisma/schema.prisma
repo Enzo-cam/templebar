@@ -29,5 +29,6 @@ model Orden{ //Al mandar una orden, se deben pasar TODOS los datos que se declar
   fecha String
   total Float
   pedido Json
+  estado Boolean @default(false)
 }
 //Despues de crear un modelo, realizamos una migracion que seria como un control de versiones pero en DB's.
